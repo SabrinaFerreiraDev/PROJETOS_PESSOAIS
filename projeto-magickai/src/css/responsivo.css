@@ -1,0 +1,52 @@
+@media(max-width:1024px){
+    .container{
+        padding: 20px;
+
+    }
+    .container{
+        text-align: center;
+    }
+    .container .filtros{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+    .container.filtros .categoria-cartas,.container .filtros .preco-cartas,.container .filtros .btn-filtra{
+        width: 65%;
+    }
+    .container .filtros .btn-filtra{
+        align-self: center;
+    }
+    .container .cartas {
+        justify-content: center;
+    }
+}
+@media(max-width:600px){
+    .container.filtros .categoria-cartas,.container .filtros .preco-cartas,.container .filtros .btn-filtra{
+        width: 100%;
+        flex: auto;
+    }
+    .container{
+        padding: 0px;
+        
+    }
+    .container .cartas{
+        width: 80%;
+        margin: auto;
+    }
+    .container .carta{
+        width: 70%;
+        margin: auto;
+    }
+   
+    .cabecalho{
+        padding: 0px;
+    }
+    .container .carta .informacoes{
+        width: 100%;
+    }
+    .container .btn-compra{
+        width: 98%;
+    }
+}

@@ -1,0 +1,173 @@
+@charset "UTF-8";
+@font-face {
+    font-family:'droid';
+    src: url('fontes/idroid.otf')format('opentype') ;
+    font-weight: normal;}
+
+@font-face {
+    font-family: 'gun';
+    src: url('/fontes/gunplay rg.otf') format('opentype');
+    font-weight: normal;
+}
+:root{
+    --font_destaque : 'gun','cursive';
+    --font_normal: Arial, Helvetica, sans-serif;
+    --font_android: 'droid','cursive';
+}
+:root{
+    --cor1:#8FC1B5;
+    --cor2:#589A8D;
+    --cor3:#007566;
+    --cor4:#146551;
+    --cor5:#265C4B;
+}
+*{
+    margin: 0%;
+    padding: 0px;
+}
+body{
+    background-color: var(--cor1);
+}
+main{
+    padding:  20px;
+    min-width: 300px;
+    max-width: 1000px;
+    margin: auto;
+    background-color: aliceblue;
+    margin-bottom: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 0px 10px black;
+}
+main img.pequena{
+    width: 350px; 
+    margin: auto;
+    display: block;
+}
+main img{
+    width: 100%;
+   
+
+}
+header{
+    padding-top: 40px;
+    margin: auto;
+    min-width: 150px;
+    text-align: center;
+    color: aliceblue;
+    font-family: var(--font_destaque);
+    background-image: linear-gradient(to right,var(--cor5),var(--cor4));
+    
+}
+header > p{
+    padding-top: 20px;
+    margin: auto;
+    padding-bottom: 40px;
+
+}
+nav{
+    padding: 9px;
+    margin: auto;
+    min-width: 150px;
+    background-image: linear-gradient(to bottom,var(--cor5),var(--cor3));
+    padding-bottom: 10px;
+}
+nav>a{
+    color: aliceblue;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-right: 20px;
+    text-decoration:none;
+}
+nav>a:hover{
+    
+    border-radius: 5px;
+    padding: 5px;
+    text-decoration: underline;
+    background-color: #5cd4bc;
+}
+h2{
+    margin: 0%;
+    text-align: center;
+    font-family: var(--font_android);
+    background-color: var(--cor1);
+    color: #024434;
+}
+main p{
+    line-height: 1.5em;
+    text-indent: 30px;
+    margin: 15px 0px 15px 0px;
+    font-family: var(--font_normal);
+    text-align: justify;
+}
+footer{
+    min-width: 300px;
+    max-width: 1020px;
+    background-color: var(--cor5);
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+   border-radius: 10px;}
+ul{
+   text-decoration: none;
+
+}
+div.video{
+    background-color: #024434;
+    margin: 0px -20px 30px -20px;
+    padding: 20px;
+    padding-bottom: 59%;
+    
+    position: relative;
+}
+div.video > iframe{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+}
+
+main a{
+    background-color: #68d1bc;
+    font-weight: bold;
+    color: #265C4B;
+    padding: 2px 6px;
+    text-decoration: none;
+}
+main a:hover{
+    text-decoration: underline;
+    color: #027e6da6;
+}
+main strong{
+    color: #146551;
+    font-weight: 600;
+    
+}
+aside {
+    background-color: #14ddc29a;
+    padding: 10px;
+    box-shadow: 5px  4px 11px rgba(0, 0, 0, 0.39);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+aside h3{
+    font-size: 1.3em;
+    background-color: #024434;
+    padding: 8px;
+    margin: -10px -10px 0px -10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+ul{
+  list-style-type: '✓' ;   /*usado para trocar algo na frente do que quer ou colocar*/
+    list-style-position: inside;
+    columns: 2; /*usados para colocar colunas em item */
+}
+/*li ::before{
+    content:'✓';
+    pode ser assim tambem
+}*/

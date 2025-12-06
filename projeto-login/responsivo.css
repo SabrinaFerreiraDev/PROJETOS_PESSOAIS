@@ -1,0 +1,255 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Manufacturing+Consent&display=swap');
+
+
+*{
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body,html{
+ background-image: linear-gradient(#002333,#159a9c96);
+  height: 100vh;
+  width: 100vw;
+}
+main{
+    position: relative;
+    height:100vh ;
+    width: 100vw;
+}
+#login{
+    
+    position: absolute;
+    top:50%;
+    left:50%;
+   
+    overflow: hidden;
+
+    background-color: aliceblue;
+    width: 250px;
+    height: 530px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.514);
+
+    transform: translate(-50%,-50%);
+    transition: width 1s,height 1s;
+    transition-timing-function: ease;
+}
+#login > #imagem{
+    display: block;
+    background:red url(foto.jpg) no-repeat;
+    height: 200px;
+    background-size: cover;
+}
+#login > #formulario{
+    display: block;
+    padding: 10PX;
+}
+#formulario > h1{
+    font-family: "Manufacturing Consent", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    padding-bottom: 10px;
+}
+#formulario > p{
+    padding-bottom: 10px;
+    font-size: 0.9em;
+    text-transform: capitalize;
+}
+.material-icons {
+    font-family: 'Material Icons';
+    font-size: 24px;
+    vertical-align: middle;
+    color: #555;
+    margin-left: 8px;
+  }
+.input-com-icone {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+}
+  
+.input-com-icone input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 1em;
+    background: transparent;
+}
+form > input[type=submit]{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    font-size: 1em;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-color: #002333b9;
+    color: white;border: 1px solid rgba(0, 0, 0, 0.308);
+}
+form > input[type=submit]:hover{
+    background-color: #002333;
+}
+a{
+    display: block;
+    text-align: center;
+    background-color: #1b3e4eb9;
+    width: 100%;
+    height: 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.308);
+}
+a:hover{
+    background-color: #002333;
+}
+div.campo > label{ 
+    font-family: "Manufacturing Consent", system-ui;
+    background-color: #002333;
+    font-size: 1.5em;
+    padding-top: 6px ;
+    padding-bottom: 3px;
+    color: aliceblue;
+    border-radius: 5px;
+ 
+}
+::placeholder{
+    color: white;
+    
+}
+div.campo > input{
+    color: rgb(255, 255, 255);
+    font: 1em; 
+    height: 100%;
+    width: calc(101% - 60.5px);
+    
+    background-color: #00B3AD;
+    border: 0px;
+    border-radius: 5px;
+    padding: 4px;
+    transform: translatex(-9px);
+    transform: translateY(-4px);
+}
+.campo{
+    padding-top: 5px;
+    width: 100%;
+    border: 1px solid black;
+    background-color: #00B3AD;
+    margin: 5px 0;
+    height: 40px;
+    border-radius: 5px;
+}
+#ilogin{
+    width: 75.7%;
+    
+}
+.campo > input:focus-within{
+    background-color: rgba(255, 255, 255, 0.815);
+    border: none;
+
+}
+  
+  
+/*em outras midias (tablet,pc)*/
+
+@media screen and (min-width:768px) and (max-width:992px) {
+    /*tablet*/ 
+    #ilogin:focus-within{
+        background-color: rgba(255, 255, 255, 0.815);
+        border: none;
+    
+    }
+    div.campo > input,#ilogin{ 
+        height: 100%;
+        width: calc(100% - 60px);
+    }
+   
+    #login > #imagem{
+        display: block;
+        background:red url(night.jpg) no-repeat;
+        height: 200px;
+        background-size: cover;
+    }
+    #formulario > h1{
+        font-family: "Manufacturing Consent", system-ui;
+        font-weight: 400;
+        font-style: normal;
+        text-align: center;
+        font-size: 2em;
+    }
+    #formulario > p{
+        font-size: 1.1em;
+    }
+      body{
+        background-image: linear-gradient(to top,#088f8ae0,#00B3AD);
+    }
+    
+    #login{
+        width: 80vw;
+        height: 400px;
+    }
+    #login > #imagem{   
+        float: left;
+        width: 30%;
+        height: 100%;
+    }
+    #login > #formulario{
+        width: 70%;
+        float: right;
+    }
+ 
+}
+@media screen and (min-width:992px){
+    /*pc*/
+    div.campo > input{
+        height: 100%;
+        width: calc(100.5% - 60px);
+
+    }
+    #ilogin{
+        width: 86.5%;
+        
+    }
+    #login > #imagem{
+        display: block;
+        background:red url(ocean.jpg) no-repeat;
+        height: 200px;
+        background-size: cover;
+    }
+    #formulario > h1{
+        font-family: "Manufacturing Consent", system-ui;
+        font-weight: 400;
+        font-style: normal;
+        text-align: center;
+        font-size: 2em;
+    }
+    
+    #formulario > p{
+        font-size: 1.1em;
+    }
+    body{
+        background-image: linear-gradient(to bottom,#8AA6A3,#4C5958);
+    }
+    #login{
+        height: 450px;
+        width: 940px;
+
+    }
+    #login > #imagem{
+        float: right;
+        width: 50%;
+        height: 100%;
+    }
+    #login > #formulario{
+        float: left;
+        width: 50%;
+    }
+    
+}
