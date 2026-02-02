@@ -8,11 +8,12 @@ const AbaPrevision = () => {
   const [error, setError] = useState("");
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [suggestion, setSuggestion] = useState("");
-  let ChaveIa = "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";
+  let ChaveIa = import.meta.env.VITE_API_KEY_IA;
 
   async function fetchWeather(cityName) {
     //alert("Cliquei na lupa");
-    let chave = "ba17b0fc0d38bf7bbe509bcbd52ed3ed";
+    let chave = import.meta.env.VITE_API_KEY;
+
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${chave}&lang=pt_br&units=metric`;
     const response = await fetch(url);
 
