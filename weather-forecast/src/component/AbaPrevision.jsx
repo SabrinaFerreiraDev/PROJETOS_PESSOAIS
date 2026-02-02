@@ -24,8 +24,8 @@ const AbaPrevision = () => {
     return response.json();
   }
 
-  async function handleSearch(cityName) {
-    if (!cityName.trim()) return;
+  async function handleSearch() {
+    if (!city.trim()) return;
 
     try {
       setLoading(true);
@@ -33,7 +33,7 @@ const AbaPrevision = () => {
         setShowSuggestion(false);
         setSuggestion("");
 
-      const data = await fetchWeather(cityName);
+      const data = await fetchWeather(city);
       setWeather(data);
        setShowSuggestion(true);
     } catch (err) {
