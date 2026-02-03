@@ -1,6 +1,7 @@
 import Micro from "../assets/microfone.svg";
 import { useState } from "react";
 import lupa from "../assets/lupa.png";
+
 const AbaPrevision = () => {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
@@ -11,7 +12,6 @@ const AbaPrevision = () => {
   let ChaveIa = import.meta.env.VITE_API_KEY_IA;
 
   async function fetchWeather(cityName) {
-    //alert("Cliquei na lupa");
     let chave = import.meta.env.VITE_API_KEY;
 
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${chave}&lang=pt_br&units=metric`;
@@ -24,18 +24,18 @@ const AbaPrevision = () => {
     return response.json();
   }
 
-  async function handleSearch() {
-    if (!city.trim()) return;
+  async function handleSearch(searchCity = city) {
+    if (!searchCity.trim()) return;
 
     try {
       setLoading(true);
       setError("");
-        setShowSuggestion(false);
-        setSuggestion("");
+      setShowSuggestion(false);
+      setSuggestion("");
 
-      const data = await fetchWeather(city);
+      const data = await fetchWeather(searchCity);
       setWeather(data);
-       setShowSuggestion(true);
+      setShowSuggestion(true);
     } catch (err) {
       setWeather(null);
       setError(err.message);
@@ -55,10 +55,7 @@ const AbaPrevision = () => {
         .replace(/\.$/, "")
         .trim();
 
-      // Atualiza input (React)
       setCity(textoTranscricao);
-      
-      // Busca imediatamente com o texto falado
       handleSearch(textoTranscricao);
     };
   }
@@ -66,58 +63,58 @@ const AbaPrevision = () => {
   function handleCityChange(event) {
     setCity(event.target.value);
   }
-async function handleSuggestion() {
-  let temperatura = weather.main.temp;
-  let Umidade = weather.main.humidity;
-  let cidade = weather.name;
 
-  const response = await fetch(
-    "https://api.groq.com/openai/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${ChaveIa}`,
+  async function handleSuggestion() {
+    let temperatura = weather.main.temp;
+    let Umidade = weather.main.humidity;
+    let cidade = weather.name;
+
+    const response = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${ChaveIa}`,
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-oss-120b",
+          messages: [
+            {
+              role: "user",
+              content: `Me dê uma sugestão de roupa para ${cidade} com temperatura de ${temperatura}°C e umidade de ${Umidade}%. Responda em no máximo 2 frases curtas.`,
+            },
+          ],
+        }),
       },
-      body: JSON.stringify({
-        model: "openai/gpt-oss-120b",
-        messages: [
-          {
-            role: "user",
-            content: `Me dê uma sugestão de roupa para ${cidade} com temperatura de ${temperatura}°C e umidade de ${Umidade}%. Responda em no máximo 2 frases curtas.`,
-          },
-        ],
-      }),
-    },
-  );
+    );
 
-  const data = await response.json();
+    const data = await response.json();
 
-  const texto =
-    data.choices?.[0]?.message?.content || "Não consegui gerar sugestão.";
+    const texto =
+      data.choices?.[0]?.message?.content || "Não consegui gerar sugestão.";
 
-  setSuggestion(texto);
-}
-
+    setSuggestion(texto);
+  }
 
   return (
-    <div className="flex justify-center items-center h-screen w-full flex-col gap-5">
+    <div className="flex justify-center items-center min-h-screen w-full flex-col gap-5 px-2">
       {/* Header */}
-      <div className="flex bg-linear-to-r justify-center items-center h-15 w-85 from-black/70 via-black/60 to-black/70 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 px-6">
-        <h1 className="text-center text-3xl font-bold font-serif text-white tracking-wider drop-shadow-md">
+      <div className="flex bg-linear-to-r justify-center items-center h-15 w-full max-w-sm md:max-w-md from-black/70 via-black/60 to-black/70 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 px-6 mx-4">
+        <h1 className="text-center text-2xl md:text-3xl font-bold font-serif text-white tracking-wider drop-shadow-md">
           Previsão do Tempo
         </h1>
       </div>
 
-      <div className="bg-black-opacity h-auto w-130 mt-10">
+      <div className="bg-black-opacity h-auto w-full max-w-xl mt-10 px-4">
         <div className="flex justify-center items-center flex-col gap-6">
           {/* Busca */}
-          <div className="flex justify-center items-center bg-linear-to-r from-black/70 to-black/50 h-auto w-120 rounded-2xl shadow-2xl border border-white/10">
-            <div className="flex justify-center items-center bg-black/40 h-auto w-120 rounded-2xl px-6 py-4 gap-4 backdrop-blur-xl">
+          <div className="flex justify-center items-center bg-linear-to-r from-black/70 to-black/50 h-auto w-full rounded-2xl shadow-2xl border border-white/10">
+            <div className="flex flex-col md:flex-row justify-center items-center bg-black/40 h-auto w-full rounded-2xl px-4 py-4 gap-4 backdrop-blur-xl">
               <input
                 type="text"
                 placeholder="Digite a cidade"
-                className="outline-none h-12 w-80 text-white bg-transparent placeholder-white/40 tracking-wide border-b border-white/20 focus:border-white/60 transition-all duration-300"
+                className="outline-none h-12 w-full md:w-80 text-white bg-transparent placeholder-white/40 tracking-wide border-b border-white/20 focus:border-white/60 transition-all duration-300"
                 value={city}
                 onChange={handleCityChange}
               />
@@ -141,7 +138,7 @@ async function handleSuggestion() {
           </div>
 
           {/* Resultado */}
-          <div className="flex flex-col bg-linear-to-r from-black/60 via-black/40 to-black/60 backdrop-blur-lg w-120 rounded-b-2xl py-6 gap-3 shadow-xl border border-white/10">
+          <div className="flex flex-col bg-linear-to-r from-black/60 via-black/40 to-black/60 backdrop-blur-lg w-full rounded-b-2xl py-6 gap-3 shadow-xl border border-white/10">
             {loading && (
               <p className="text-white text-center animate-pulse">
                 Carregando...
@@ -152,12 +149,12 @@ async function handleSuggestion() {
 
             {weather && !loading && (
               <div className="flex flex-col items-center gap-4 py-6">
-                <h2 className="text-3xl font-bold text-white tracking-widest font-mono">
+                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-widest font-mono">
                   {weather.name}
                 </h2>
 
                 <div className="flex items-center gap-4">
-                  <p className="text-5xl font-semibold text-white">
+                  <p className="text-4xl md:text-5xl font-semibold text-white">
                     {Math.round(weather.main.temp)}°
                   </p>
 
@@ -172,36 +169,21 @@ async function handleSuggestion() {
                   {weather.weather[0].description}
                 </p>
 
-                <div className="w-32 h-px bg-linear-to-r from-transparent via-white/30 to-transparent my-2"></div>
-
                 <p className="text-sm text-white opacity-80">
                   Umidade: {weather.main.humidity}%
                 </p>
 
                 {showSuggestion && (
-                  <div className="flex flex-col items-center gap-2">
+                  <div className="flex flex-col items-center gap-2 w-full">
                     <p
                       onClick={handleSuggestion}
-                      className="text-white font-semibold bg-linear-to-r from-sky-400/20 w-50 h-9 via-cyan-300/10 to-sky-400/20 px-50 py-4 rounded-2xl border border-white/20 shadow-xl  backdrop-blur-lg cursor-pointer transition-all hover:scale-105 active:scale-95 text-center "
+                      className="text-white font-semibold bg-linear-to-r from-sky-400/20 w-full max-w-xs h-9 via-cyan-300/10 to-sky-400/20 px-6 py-4 rounded-2xl border border-white/20 shadow-xl backdrop-blur-lg cursor-pointer transition-all hover:scale-105 active:scale-95 text-center"
                     >
                       Sugestão de Roupa
                     </p>
 
                     {suggestion && (
-                      <div
-                        className="
-      mt-5 max-w-md
-      bg-linear-to-br from-white/15 via-white/5 to-white/15
-      border border-white/20
-      rounded-2xl
-      p-5
-      text-white
-      shadow-xl shadow-black/40
-      backdrop-blur-xl
-      animate-fade-in
-      flex flex-col items-center gap-3
-    "
-                      >
+                      <div className="mt-5 max-w-md bg-linear-to-br from-white/15 via-white/5 to-white/15 border border-white/20 rounded-2xl p-5 text-white shadow-xl shadow-black/40 backdrop-blur-xl animate-fade-in flex flex-col items-center gap-3">
                         <span className="text-xs tracking-widest text-cyan-300">
                           🤖 RECOMENDAÇÃO INTELIGENTE
                         </span>
