@@ -1,60 +1,164 @@
-<!DOCTYPE html> <!-- ESTAMOS USANDO A VERSAO MAIS NOVA DO HTML -->
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tradutor moderno com reconhecimento de voz, histórico, cópia rápida e interface premium."
+    />
+    <link rel="preconnect" href="https://api.mymemory.translated.net" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Lexora Tradutor</title>
+  </head>
 
-
-
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>TRADUTOR DevClub</title>
-</head>
-
-<body>
-    <div class="caixa-maior">
-
-        <textarea class="input-texto"></textarea>
-
-        <div class="controle">
-            
-            <select class="idioma">
-                <option value="en">Inglês</option>
-                <option value="es">Espanhol</option>
-                <option value="fr">Francês</option>
-                <option value="de">Alemão</option>
-                <option value="it">Italiano</option>
-                <option value="ja">Japonês</option>
-                <option value="pt-BR">Português (Brasil)</option>
-                <option value="ko">Coreano</option>
-                <option value="ru">Russo</option>
-                <option value="sv">Sueco</option>
-                <option value="tr">Turco</option>
-            </select>
-
-            <button onclick="traduzir()">
-                <img src="/img/traduzir.svg">
-            </button>
-
-            <button onclick="ouvirVoz()">
-                <img src="/img/microfone.svg">
-            </button>
-
-        </div>
-
-        <div class="resultado">
-            <h3 class="titulo-traducao">Tradução</h3>
-            <p class="traducao">A Tradução aparecerá aqui...</p>
-        </div>
-
-
+  <body>
+    <div class="ambient" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+      <span class="orb orb-c"></span>
+      <span class="grid-glow"></span>
+      <span class="particle-field"></span>
     </div>
-</body>
 
-<script src="scripts.js">
+    <main class="app-shell" data-app>
+      <section class="hero-panel" aria-labelledby="app-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Tradutor com voz</p>
+          <h1 id="app-title">Tradução instantânea com voz e precisão.</h1>
+          <p class="hero-description">
+            Fale, digite, inverta idiomas e acompanhe suas traduções recentes
+            em uma interface limpa, moderna e responsiva.
+          </p>
+        </div>
+      </section>
 
-</script>
+      <section class="translator-card" aria-label="Tradutor inteligente">
 
+        <div class="language-bar">
+          <label class="field-label">
+            Origem
+            <select data-source-language aria-label="Idioma de origem"></select>
+          </label>
 
+          <button
+            class="icon-button swap-button"
+            type="button"
+            data-swap-languages
+            aria-label="Inverter idiomas"
+            title="Inverter idiomas"
+          >
+            ⇄
+          </button>
 
+          <label class="field-label">
+            Destino
+            <select data-target-language aria-label="Idioma de destino"></select>
+          </label>
+        </div>
+
+        <div class="translation-grid">
+          <article class="text-panel input-panel">
+            <div class="panel-topline">
+              <span>Entrada</span>
+              <span class="detected-language" data-detected-language>
+                Idioma automático
+              </span>
+            </div>
+
+            <textarea
+              data-input-text
+              maxlength="500"
+              placeholder="Digite algo ou toque no microfone para começar..."
+              aria-label="Texto para traduzir"
+            ></textarea>
+
+            <div class="panel-actions">
+              <button class="ghost-button" type="button" data-clear-text>
+                Limpar
+              </button>
+              <button class="primary-button" type="button" data-translate-now>
+                <span>Traduzir</span>
+                <span class="button-shine" aria-hidden="true"></span>
+              </button>
+            </div>
+          </article>
+
+          <article class="text-panel output-panel" aria-live="polite">
+            <div class="panel-topline">
+              <span>Resultado</span>
+              <span data-output-meta>Esperando entrada</span>
+            </div>
+
+            <div class="translation-output is-placeholder" data-output-text>
+              A tradução aparecerá aqui...
+            </div>
+
+            <div class="skeleton" data-skeleton aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="panel-actions">
+              <button class="ghost-button" type="button" data-copy-text>
+                Copiar
+              </button>
+              <button class="ghost-button" type="button" data-use-output>
+                Usar como entrada
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <div class="voice-dock" data-voice-dock>
+          <button
+            class="mic-button"
+            type="button"
+            data-microphone
+            aria-label="Iniciar reconhecimento de voz"
+          >
+            <span class="mic-core">🎙</span>
+            <span class="mic-ring" aria-hidden="true"></span>
+          </button>
+
+          <div class="voice-feedback">
+            <strong data-voice-title></strong>
+            <span data-voice-message></span>
+          </div>
+
+          <div class="audio-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <aside class="history-panel" aria-label="Histórico recente">
+          <div class="history-header">
+            <div>
+              <p class="eyebrow">Memória local</p>
+              <h3>Traduções recentes</h3>
+            </div>
+            <button class="text-button" type="button" data-clear-history>
+              Apagar
+            </button>
+          </div>
+          <ul class="history-list" data-history-list></ul>
+        </aside>
+
+        <div class="shortcut-strip" aria-label="Atalhos de teclado">
+          <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd> traduz</span>
+          <span><kbd>Ctrl</kbd> + <kbd>K</kbd> limpa</span>
+          <span><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> inverte</span>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast-stack" data-toast-stack aria-live="polite"></div>
+
+    <script type="module" src="scripts.js"></script>
+  </body>
 </html>

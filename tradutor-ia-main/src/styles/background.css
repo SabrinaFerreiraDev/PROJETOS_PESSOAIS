@@ -1,0 +1,92 @@
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb,
+.grid-glow,
+.particle-field {
+  position: absolute;
+  display: block;
+}
+
+.orb {
+  width: clamp(220px, 34vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  filter: blur(36px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: floatOrb 16s ease-in-out infinite alternate;
+}
+
+.orb-a {
+  top: -12%;
+  left: -7%;
+  background: radial-gradient(circle, var(--cyan), transparent 68%);
+}
+
+.orb-b {
+  right: -9%;
+  bottom: 3%;
+  background: radial-gradient(circle, var(--violet), transparent 66%);
+  animation-delay: -6s;
+}
+
+.orb-c {
+  top: 30%;
+  left: 42%;
+  width: clamp(150px, 22vw, 360px);
+  background: radial-gradient(circle, var(--pink), transparent 68%);
+  animation-delay: -10s;
+}
+
+.grid-glow {
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(103 232 249 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(103 232 249 / 8%) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, transparent, black 16%, black 72%, transparent);
+  opacity: 0.45;
+  transform: perspective(900px) rotateX(58deg) translateY(18%);
+  transform-origin: bottom;
+}
+
+.particle-field {
+  inset: -20%;
+  background-image:
+    radial-gradient(circle, rgb(255 255 255 / 60%) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgb(103 232 249 / 50%) 0 1px, transparent 1.8px);
+  background-position:
+    0 0,
+    48px 86px;
+  background-size:
+    180px 180px,
+    260px 260px;
+  opacity: 0.28;
+  animation: driftParticles 30s linear infinite;
+}
+
+@keyframes floatOrb {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(4vw, -3vh, 0) scale(1.12);
+  }
+}
+
+@keyframes driftParticles {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-80px, 120px, 0);
+  }
+}
