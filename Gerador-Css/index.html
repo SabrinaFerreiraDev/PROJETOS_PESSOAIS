@@ -1,56 +1,188 @@
-<!DOCTYPE html> <!-- A VERSÃO DO HTML QUE ESTAMOS USANDO -->
-<!-- VERSÃO 5 DO HTML (MAIS MODERNA) -->
-
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8"> <!-- PADRÃO DE CARACTERES -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="shortcut icon" href="src/logo-desenvolvedora.png" type="image/x-icon">
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ferramenta premium para gerar HTML e CSS com IA, preview ao vivo e editor moderno."
+    />
+    <script>
+      tailwind = {
+        config: {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ['"Space Grotesk"', "system-ui", "sans-serif"],
+                mono: ['"IBM Plex Mono"', "monospace"],
+              },
+              colors: {
+                ink: {
+                  950: "#08090b",
+                  900: "#0f1115",
+                  850: "#141820",
+                  800: "#1c222b",
+                },
+                cream: {
+                  50: "#fbf8f2",
+                  100: "#f4ebd8",
+                  200: "#ead8ae",
+                },
+                gold: {
+                  400: "#e9bf69",
+                  500: "#f5c76b",
+                  600: "#d9a64b",
+                },
+              },
+              boxShadow: {
+                panel: "0 24px 70px rgba(0, 0, 0, 0.38)",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="src/logo-desenvolvedora.png" type="image/x-icon" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>CSS Studio AI</title>
+  </head>
+  <body class="min-h-screen bg-ink-950 text-white font-sans">
+    <main class="mx-auto flex min-h-screen w-[min(1480px,calc(100%-24px))] flex-col gap-5 py-4 sm:py-6">
+      <header class="surface rounded-[10px] border border-white/10 bg-white/[0.03] px-4 py-5 shadow-panel backdrop-blur-md sm:px-6 sm:py-6">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div class="flex gap-4">
+            <div
+              class="grid h-11 w-11 place-items-center rounded-[10px] border border-black/10 bg-cream-50 text-sm font-bold tracking-tight text-ink-950"
+            >
+              CS
+            </div>
+            <div>
+              <p class="mb-2 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-gold-500">CSS Studio AI</p>
+              <h1 class="max-w-3xl text-[clamp(2rem,4vw,4.2rem)] leading-[0.95] tracking-tight">
+                Gere interfaces em CSS com acabamento de produto.
+              </h1>
+            </div>
+          </div>
 
-    <title>Gerador de IA</title>
-</head>
-
-<body>
-    <h1>
-        CSS Gerador <span>com IA</span>⚡️
-    </h1>
-
-    <p>
-        Descreva o que você imagina e veja a mágica acontecer
-    </p>
-
-    <textarea rows="3" class="caixa-texto" placeholder="Ex: Bola azul pingando"></textarea>
-    <button class="botao-gerar">Gerar Código ⚡️</button>
-    <div class="descricao"><button class="botao-Apagar">Apagar Descricão</button>
-    <button class="botao-Copiar">Copiar Código</button></div>
-    
-
-    <div class="resultado">
-
-        <div>
-            <h2>Código</h2>
-            <p class="bloco-codigo"></p>
+          <div
+            id="aiStatus"
+            data-status="idle"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/70"
+          >
+            <span class="status-dot h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(74,222,128,0.12)]"></span>
+            <span id="statusText">IA pronta</span>
+          </div>
         </div>
+      </header>
 
-        <div>
-            <h2>Preview</h2>
-            <iframe class="resultado-codigo"></iframe>
+      <section class="surface rounded-[10px] border border-white/10 bg-white/[0.03] px-4 py-5 shadow-panel backdrop-blur-md sm:px-6 sm:py-6">
+        <div class="grid gap-5 lg:grid-cols-[0.9fr,1.1fr]">
+          <div>
+            <p class="mb-2 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-gold-500">Prompt</p>
+            <h2 class="text-lg font-semibold tracking-tight text-white">Descreva o componente</h2>
+            <p class="mt-2 max-w-xl text-sm leading-6 text-white/55">
+              Inclua estilo, comportamento, cores e contexto de uso. A IA retorna HTML e CSS pronto para preview.
+            </p>
+          </div>
+
+          <form id="generatorForm" class="grid gap-3">
+            <textarea
+              id="promptInput"
+              rows="5"
+              class="min-h-[132px] w-full resize-y rounded-[8px] border border-white/10 bg-ink-900 px-4 py-4 text-sm leading-6 text-white outline-none transition focus:border-gold-500/60 focus:bg-ink-850 focus:shadow-[0_0_0_4px_rgba(245,199,107,0.1)]"
+              placeholder="Ex: um card de pricing minimalista para SaaS, dark mode, CTA elegante e microinteracao no hover"
+              required
+            ></textarea>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 rounded-[8px] border border-white/10 bg-ink-900/70 p-3">
+              <button
+                id="clearPromptButton"
+                type="button"
+                class="min-h-10 rounded-[7px] border border-white/10 bg-white/5 px-3 text-sm font-semibold text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+              >
+                Limpar prompt
+              </button>
+              <button
+                id="generateButton"
+                type="submit"
+                class="inline-flex min-h-10 items-center rounded-[7px] bg-gold-500 px-4 text-sm font-bold text-ink-950 transition hover:bg-cream-200 hover:translate-y-[-1px]"
+              >
+                <span class="button-loader mr-2 hidden h-3 w-3 animate-spin rounded-full border-2 border-black/20 border-t-black/70"></span>
+                <span id="generateLabel">Gerar CSS</span>
+              </button>
+            </div>
+          </form>
         </div>
+      </section>
 
-    </div>
+      <section class="grid gap-4 xl:grid-cols-[1fr,0.95fr]">
+        <article class="surface overflow-hidden rounded-[10px] border border-white/10 bg-white/[0.03] shadow-panel backdrop-blur-md">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 p-4 sm:p-5">
+            <div>
+              <p class="mb-1 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-gold-500">Preview</p>
+              <h2 class="text-base font-semibold tracking-tight text-white">Renderizacao ao vivo</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="zoomOutButton" type="button" class="tool-button">-</button>
+              <span id="zoomReadout" class="min-w-11 text-center text-sm font-semibold text-white/55">100%</span>
+              <button id="zoomInButton" type="button" class="tool-button">+</button>
+              <button id="resetPreviewButton" type="button" class="tool-button">Reset</button>
+            </div>
+          </div>
+          <div class="preview-stage flex min-h-[420px] flex-col gap-3 overflow-auto bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.05),_transparent_48%),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_100%,28px_28px,28px_28px] p-3 sm:p-5">
+            <div
+              id="previewEmpty"
+              class="rounded-[8px] border border-dashed border-white/10 bg-ink-900/70 px-4 py-5 text-sm text-white/45"
+            >
+              <strong class="mb-1 block text-sm text-white/90">Nenhum preview ainda</strong>
+              <span>Gere um componente para visualizar o resultado em tempo real.</span>
+            </div>
+            <iframe
+              id="previewFrame"
+              title="Preview do codigo gerado"
+              hidden
+              class="min-h-[360px] w-full rounded-[8px] border border-white/10 bg-white transition duration-150"
+            ></iframe>
+          </div>
+        </article>
 
-</body>
+        <article class="surface overflow-hidden rounded-[10px] border border-white/10 bg-white/[0.03] shadow-panel backdrop-blur-md">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 p-4 sm:p-5">
+            <div>
+              <p class="mb-1 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-gold-500">Editor</p>
+              <h2 class="text-base font-semibold tracking-tight text-white">Codigo gerado</h2>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button id="copyButton" type="button" class="tool-button">Copiar</button>
+              <button id="downloadButton" type="button" class="tool-button">Baixar</button>
+              <button id="clearOutputButton" type="button" class="tool-button danger">Limpar</button>
+            </div>
+          </div>
 
-<script src="script.js" type="module"></script>
+          <div class="tabs flex gap-1 border-b border-white/10 bg-ink-900 px-3 py-2" role="tablist" aria-label="Tipos de codigo">
+            <button class="tab active tool-button" type="button" data-tab="css" aria-selected="true">CSS</button>
+            <button class="tab tool-button" type="button" data-tab="html" aria-selected="false">HTML</button>
+            <button class="tab tool-button" type="button" data-tab="notes" aria-selected="false">Notas</button>
+          </div>
 
-</script>
+          <div class="code-editor h-[420px] overflow-auto bg-ink-950 font-mono text-[0.82rem] leading-[1.65] sm:h-[500px]" id="codeEditor" aria-live="polite">
+            <ol id="codeLines" class="m-0 list-decimal pl-14 pr-0 py-4 text-white/75">
+              <li class="px-4">Aguardando geracao...</li>
+            </ol>
+          </div>
+        </article>
+      </section>
 
+      <div id="toast" role="status" aria-live="polite"></div>
+    </main>
 
+    <script src="script.js"></script>
+  </body>
 </html>
